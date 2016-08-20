@@ -1,0 +1,107 @@
+﻿
+open System
+open Lexing
+
+type keywords = 
+	EOF | STRUCTURE | LOCAL | OPEN | SIGNATURE | FUNCTOR | STRUCT | SIG | INFIX | INFIXR | NONFIX | WHERE | TYPE
+	| VAL | EQTYPE | ABSTYPE | WITHTYPE | DATATYPE | SHARING | INCLUDE | EXCEPTION | WITH | ANDALSO | ORELSE | HANDLE
+	| RAISE | FUN | REC | LET | IF | THEN | ELSE | WHILE | DO | CASE | FN | OF | AS | AND | IN | OP | END | ID of string
+
+type opTokens = EQ | SEMICOLON | COLON | COLONARROW | DBLARROW | LEFT_PAREN | RIGHT_PAREN | LEFT_BRACKET | RIGHT_BRACKET | LEFT_BRACE | RIGHT_BRACE
+	| BAR | COMMA | HASH | UNDERLINE | ELLIPSIS | STAR | ARROW | DOT | DBL_QUOTE | BACKSLASH | SINGLE_QUOTE
+let keywords = 
+	[
+		"structure", STRUCTURE;
+		"local", LOCAL;
+		"open", OPEN;
+		"signature, SIGNATURE";
+		"functor", FUNCTOR;
+		"struct", STRUCT;
+		"sig", SIG;
+		"infix", INFIX;
+		"infixr", INFIXR;
+		"nonfix", NONFIX;
+		"where", WHERE;
+		"type", TYPE;
+		"val", VAL;
+		"eqtype", EQTYPE;
+		"abstype", DATATYPE;
+		"withtype", WITHTYPE;
+		"datatype", DATATYPE;
+		"sharing", SHARING;
+		"include, INCLUDE"
+		"exception", EXCEPTION;
+		"with", WITH;
+		"andalso", ANDALSO;
+		"orelse", ORELSE;
+		"handle", HANDLE;
+		"raise", RAISE;
+		"fun", FUN;
+		"rec", REC;
+		"let", LET;
+		"if", IF;
+		"then", THEN;
+		"else", ELSE;
+		"while", WHILE;
+		"do", DO;
+		"case", CASE;
+		"fn", FN;
+		"of", OF;
+		"as", AS;
+		"and", AND;
+		"in", IN;
+		"end", END
+		"op", OP;
+	] |> Map.of_list
+
+let ops = 
+	[
+		"=", EQ;
+		";", SEMICOLON;
+		":", COLON;
+		":>", COLONARROW;
+		"=>", DBLARROW;
+		"(", LEFT_PAREN;
+		")", RIGHT_PAREN;
+		"[", LEFT_BRACKET;
+		"]", RIGHT_BRACKET;
+		"{", LEFT_BRACE;
+		"}", RIGHT_BRACE;
+		"|", BAR;
+		",", COMMA;
+		"#", HASH;
+		"_", UNDERLINE;
+		"...", ELLIPSIS;
+		"*", STAR;
+		"->", ARROW;
+		".", DOT;
+		"\"", DBL_QUOTE;
+		"\\", BACKSLASH;
+		"'", SINGLE_QUOTE;
+	] |> Map.of_list
+
+
+	let letter = ['a'-'z' 'A'-'Z']
+	let digit = ['0'-'9']
+	let hex = ['a'-'f' 'A'-'F']
+	let numeral = '~'?digit+
+	let whitespace = [' ' '\t']
+	let newline = "\n\r" | '\n' | '\r'
+	let hexdigit = digit | hexdigit
+	let ident_symbol = ['!' '%' '&' '$' '#' '+' '-' '/' ':' '<' '=' '>' '?' '@' '\' '~' '`' '^' '|' '*']
+	let alpanumeric_ident = letter(letter | digit | '_' | '\'')*
+	let ident = alphanumeric_ident | ident_symbol
+	let type_var = '('?)(_?)alphanumeric_ident
+	let label = ident | digit+
+
+
+	rule tokenize = parse
+	| whitespace      { tokenise lexbuf }
+	| newline         { lexbuf.EndPos <- lexbuf.EndPos.NextLine; tokenize lexbuf; }
+	| identifier      { 
+						match keywords.TryFind(lexeme lexbuf) with
+	                    | Some(token) -> token
+						| None -> ID(lexeme lexbuf)
+					  }
+	| eof             { EOF}
+

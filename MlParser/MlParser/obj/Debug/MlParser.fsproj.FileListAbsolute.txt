@@ -1,0 +1,11 @@
+c:\Users\David\Documents\GitHub\MlParser2016\MlParser\MlParser\bin\Debug\MlParser.exe.config
+c:\Users\David\Documents\GitHub\MlParser2016\MlParser\MlParser\bin\Debug\MlParser.XML
+c:\Users\David\Documents\GitHub\MlParser2016\MlParser\MlParser\bin\Debug\MlParser.exe
+c:\Users\David\Documents\GitHub\MlParser2016\MlParser\MlParser\bin\Debug\MlParser.pdb
+c:\Users\David\Documents\GitHub\MlParser2016\MlParser\MlParser\bin\Debug\FSharp.Core.dll
+c:\Users\David\Documents\GitHub\MlParser2016\MlParser\MlParser\bin\Debug\FsLexYacc.Runtime.dll
+c:\Users\David\Documents\GitHub\MlParser2016\MlParser\MlParser\bin\Debug\FsLexYacc.Runtime.xml
+c:\Users\David\Documents\GitHub\MlParser2016\MlParser\MlParser\bin\Debug\FSharp.Core.xml
+c:\Users\David\Documents\GitHub\MlParser2016\MlParser\MlParser\obj\Debug\MlParser.fsproj.MlParser.exe.config
+c:\Users\David\Documents\GitHub\MlParser2016\MlParser\MlParser\obj\Debug\MlParser.exe
+c:\Users\David\Documents\GitHub\MlParser2016\MlParser\MlParser\obj\Debug\MlParser.pdb
