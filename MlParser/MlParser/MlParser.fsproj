@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <Import Project="C:\Users\David\Documents\GitHub\MlParser2016\MlParser\packages\FsLexYacc.6.1.0\build\FsLexYacc.targets" />
+  <Import Project="C:\Users\DThayer\Documents\GitHub\MLParser2016\MlParser\packages\FsLexYacc.6.1.0\build\FsLexYacc.targets" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -26,6 +26,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DocumentationFile>bin\Debug\MlParser.XML</DocumentationFile>
     <Prefer32Bit>true</Prefer32Bit>
+    <StartArguments>"let x y = 1"</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -59,12 +60,10 @@
     <FsYacc Include="ML_parse.fsy">
       <OtherFlags>--module Parser</OtherFlags>
     </FsYacc>
-    <FsLex Include="ML_lex.fsl">
-      <OtherFlags>--unicode</OtherFlags>
-    </FsLex>
     <None Include="App.config" />
     <Content Include="packages.config" />
     <Compile Include="MLAst.fs" />
+    <Compile Include="ML_lex.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
