@@ -6,25 +6,61 @@ type label = Label of string
 
 type compoundId = CompundId of list<id>
 
-type signature = Signature
+type typeVar = TypeVar of id            
+
+type typeVarList = NullList | TypeVar of typeVar | TypeVarList of list<typeVar>    
 
 type functorBinding = FunctorBinding
 
-type functorDeclaration = FunctorDeclaration of list<functorBinding>
-
-type signatureDeclaration = SignatureDeclaration of list<id * signature>
+type functorDeclaration = FunctorDeclaration of list<functorBinding>  
 
 type objectDeclaration = 
-    Declaration | StructureDeclaration | LocalDeclaration
+    Declaration | StructureDeclaration | LocalDeclaration   
 
-type pattern = 
+and bracePatternExpression = BracePatternExpression
+
+and atomicPattern = 
+   DontCare 
+   |   CompoundName of compoundId 
+   | Constant  
+   | ParenPatternList of list<pattern>
+   | BracketPatternList of list<pattern> 
+   | BracePatternExpression of bracePatternExpression
+and compoundAtomicPattern = CompoundAtomicPattern of atomicPattern * infixOperator * atomicPattern
+and name = Ident of id | InfixOp of  infixOperator
+
+and functionHeader = 
+   NamedFunction of name * list<atomicPattern> 
+   | CompundPatternWithListFunction of compoundAtomicPattern * list<atomicPattern>
+   | CompundPatternFunction of compoundAtomicPattern
+
+and infixOperator = InfixOperator of id
+and pattern = 
     AtomicPattern
     | NamedPattern
     | CompoundPattern
     | TypedPattern
     | NamedTypeAsPattern
 
-type idType = 
+type dataTypeBinding = DataTypeBinding
+
+type specification = 
+   NullSpecification 
+   | ValSpec of list<id * ``type``> 
+   | TypeSpec of list<typeVarList * id * option<``type``>>
+   | EqTypeSpec of list<typeVarList * id>
+   | DataTypeSpec of list<dataTypeBinding> 
+   | ExceptionSpec of list<id * option<``type``>>
+   | StructureSpec of list<id * signature>
+   | SharingSpec  of list<option<``type``> * list<compoundId>>
+   | IncludeSpec of list<id>
+
+and signature = 
+   SignatureSpecificatopn of specification 
+   | SignatureId of id 
+   | WhereSignature of list<typeVarList * compoundId * ``type``>
+
+and idType = 
     Identifier of compoundId 
     | IdentifierWithType of ``type`` * compoundId 
     | IdentifierWithTypes of list<``type``> * compoundId
@@ -37,13 +73,15 @@ and ``type`` =
     | LabeledType of list<label * ``type``>
     | SubType
 
+
+
 type constant = Const
 
 type compoundName = CompoundName
 
-type infixOp = InfixOperator of id
+type signatureDeclaration = SignatureDeclaration of list<id * signature>
 
-type dataTypeBinding = DataTypeBinding
+
 
 type typeBinding = TypeBinding
 
@@ -55,7 +93,7 @@ and functionHeading = FunctionHeading
 
 and declaration =
     NullDeclaration
-    | ValDeclaration of list<bool * pattern * expression> // boolean value indicates the rpesence of a recursion signifier
+    | ValDeclaration of list<bool * pattern * expression> // boolean value indicates the presence of a recursion signifier
     | FunDeclaration of list<functionHeading * ``type`` * expression>
     | TypeDeclaration of typeBinding
     | DataTypeDeclaration of dataTypeBinding * option<typeBinding>
@@ -78,7 +116,7 @@ and atomicExpression =
     | ExpressionList of list<expression>
     | LetExpression of declaration * list<expression>
 
-and infixExpression = AtomicExpression of list<atomicExpression> | CompundExpr of infixExpression * infixOp * infixExpression
+and infixExpression = AtomicExpression of list<atomicExpression> | CompundExpr of infixExpression * infixOperator * infixExpression
 
 and compoundExpression = AndAlsoExpression of expression * expression | OrElseExpression of expression * expression    
 

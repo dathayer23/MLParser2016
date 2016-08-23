@@ -64,6 +64,8 @@
     <Content Include="packages.config" />
     <Compile Include="MLAst.fs" />
     <Compile Include="ML_lex.fs" />
+    <Compile Include="ML_parse.fsi" />
+    <Compile Include="ML_parse.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>

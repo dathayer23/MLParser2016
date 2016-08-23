@@ -1,0 +1,89 @@
+%{
+module MlParser =
+open MLAst
+%}
+
+%start start
+
+%token STRUCTURE
+%token LOCAL
+%token OPEN
+%token SIGNATURE
+%token FUNCTOR
+%token STRUCT
+%token SIG
+%token INFIX
+%token INFIXR
+%token NONFIX
+%token WHERE
+%token TYPE
+%token VAL
+%token EQTYPE
+%token ABSTYPE 
+%token WITHTYPE
+%token DATATYPE
+%token SHARING
+%token INCLUDE
+%token EXCEPTION
+%token WITH
+%token ANDALSO
+%token ORELSE
+%token HANDLE
+%token RAISE
+%token FUN
+%token REC
+%token LET
+%token IF
+%token THEN
+%token ELSE
+%token WHILE
+%token DO
+%token CASE
+%token FN
+%token OF
+%token AS
+%token AND
+%token IN
+%token OP
+%token END
+%token<string> ID
+%token<string> SYMB_ID
+%token<string> INT
+%token<string> HEX
+%token<string> FLOAT
+%token<string> TYPEVAR
+
+// operator and punc tokens
+%token EQ
+%token SEMICOLON
+%token COLON
+%token DBLARROR
+%token LEFT_PAREN
+%token RIGHT_PAREN
+%token LEFT_BRACKET
+%token RIGHT_BRACKET
+%token LEFT_BRACE
+%token RIGHT_BRACE
+%token BAR
+%token COMMA 
+%token HASH
+%token UNDERLINE
+%token ELLIPSIS
+%token STAR
+%token ARROW
+%token DOT
+%token DBL_QUOTE
+%token BACKSLASH
+%token SINGLE_QUOTE
+%token HELLO
+
+%token EOF
+
+%type <MLAst.program> start
+
+%%
+
+start: File EOF {%1}
+
+File: 
+   | HELLO       { 1 }
